@@ -4,6 +4,10 @@ import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import Dashboard from './pages/Dashboard';
+import SearchDiscipline from './pages/SearchDiscipline';
+import SearchProfessor from './pages/SearchProfessor';
+import RateProfessor from './pages/RateProfessor';
+import Profile from './pages/Profile';
 import './styles/global.css';
 
 function ProtectedRoute({ children }) {
@@ -23,6 +27,38 @@ function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/search-discipline"
+          element={
+            <ProtectedRoute>
+              <SearchDiscipline />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/search-professor"
+          element={
+            <ProtectedRoute>
+              <SearchProfessor />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/rate-professor"
+          element={
+            <ProtectedRoute>
+              <RateProfessor />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />

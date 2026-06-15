@@ -8,6 +8,8 @@ const schema = [
     email TEXT UNIQUE NOT NULL,
     senha TEXT NOT NULL,
     is_active INTEGER DEFAULT 0,
+    verification_token TEXT,
+    verification_token_expires DATETIME,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
   )`,

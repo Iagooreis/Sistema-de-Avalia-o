@@ -128,10 +128,68 @@ npm test
 
 ## 📝 Sprint 1 - Funcionalidades Implementadas
 
-✅ PB01: Lógica de Autenticação com validação de e-mail institucional
-✅ PB02: Interfaces de Landing Page, Cadastro e Login (Mobile-First)
-✅ PB11: Schema relacional do banco de dados
-- Próximas sprints: Busca por disciplina, busca por professor, avaliações
+✅ **PB01:** Autenticação com validação de e-mail institucional (@ufba.br)
+   - Registro com token de verificação gerado automaticamente
+   - Link de verificação logado no console (sem dependências externas)
+   - Conta ativada após clique no link de verificação
+   - JWT de 7 dias para sessões autenticadas
+
+✅ **PB02:** Interfaces responsivas (Mobile-First)
+   - Landing Page com navegação para Login/Registro
+   - Página de Registro com validação de domínio em tempo real
+   - Página de Login com tratamento de erros
+   - Dashboard com 4 funcionalidades (primeiros passos para Sprint 2)
+   - Perfil do usuário com informações pessoais
+
+✅ **PB11:** Schema relacional do banco de dados
+   - 5 tabelas normalizadas (usuarios, professores, disciplinas, professor_disciplina, avaliacoes)
+   - Relacionamento Many-to-Many com isolamento de contexto Professor-Disciplina
+   - Campos de verificação de email (token + expiration)
+
+## 📧 Como funciona a Validação de Email
+
+1. **Registro**: Usuário se cadastra com email @ufba.br
+   ```
+   ✅ Validação em tempo real: email deve terminar com @ufba.br
+   ✅ Senha mínima: 8 caracteres
+   ```
+
+2. **Token Gerado**: Um token único de 64 caracteres é criado e armazenado
+   ```
+   ✅ Expira em 24 horas
+   ✅ Armazenado no banco de dados (SQLite)
+   ```
+
+3. **Link de Verificação**: O link aparece no console do servidor
+   ```
+   Terminal (servidor):
+   ============================================================
+   📧 EMAIL DE VERIFICAÇÃO
+   ============================================================
+   Para: seu_email@ufba.br
+
+   Clique no link para ativar sua conta:
+
+   http://localhost:5000/api/auth/verify/abc123def456...
+   ============================================================
+   ```
+
+4. **Ativação**: Usuário clica no link ou copia para o navegador
+   ```
+   ✅ GET /api/auth/verify/:token
+   ✅ Conta marcada como is_active = 1
+   ✅ Pode fazer login normalmente
+   ```
+
+5. **Login**: Apenas contas ativadas conseguem fazer login
+   ```
+   ❌ Sem verificação: erro "Conta não ativada. Verifique seu e-mail."
+   ✅ Com verificação: JWT gerado, redirecionado para Dashboard
+   ```
+
+**Próximas sprints:** 
+- Sprint 2: Busca por disciplina (PB03), busca por professor (PB04), avaliações (PB12)
+- SIGAA Integration, comentários, métricas avançadas
 
 ## 🤝 Contribuindo
 
