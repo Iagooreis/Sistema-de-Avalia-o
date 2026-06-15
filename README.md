@@ -199,11 +199,5 @@ Siga os padrões de código e sempre crie testes antes de implementar novas func
 
 MIT
 
-## 👥 Autores
-
-- Wellington Miguel - Full-Stack Developer
-- UFBA - Instituto de Computação
-
----
 
 **Nota:** Este projeto utiliza Scrum, BDD (Behavior-Driven Development) e é assistido por LLM para engenharia de prompts.
