@@ -7,6 +7,7 @@ const helmet = require('helmet');
 
 const authRoutes = require('./routes/authRoutes');
 const mainRoutes = require('./routes/mainRoutes');
+const avaliacoesRoutes = require('./routes/avaliacoesRoutes');
 const { handleError } = require('./utils/errorHandler');
 
 const app = express();
@@ -20,6 +21,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api', mainRoutes);
+app.use('/api/avaliacoes', avaliacoesRoutes);
 
 // Health check endpoint
 app.get('/', (req, res) => {

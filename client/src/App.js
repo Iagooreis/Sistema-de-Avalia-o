@@ -6,7 +6,7 @@ import RegisterPage from './pages/RegisterPage';
 import Dashboard from './pages/Dashboard';
 import SearchDiscipline from './pages/SearchDiscipline';
 import SearchProfessor from './pages/SearchProfessor';
-import RateProfessor from './pages/RateProfessor';
+import AvaliarProfessor from './pages/AvaliarProfessor';
 import Profile from './pages/Profile';
 import './styles/global.css';
 
@@ -50,7 +50,7 @@ function App() {
           path="/rate-professor"
           element={
             <ProtectedRoute>
-              <RateProfessor />
+              <AvaliarProfessor />
             </ProtectedRoute>
           }
         />

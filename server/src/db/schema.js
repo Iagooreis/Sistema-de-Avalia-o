@@ -74,28 +74,33 @@ const schema = [
   `CREATE INDEX IF NOT EXISTS idx_professor_disciplina_disc ON professor_disciplina(disciplina_id)`,
   `CREATE INDEX IF NOT EXISTS idx_usuarios_email ON usuarios(email)`,
   `CREATE INDEX IF NOT EXISTS idx_professores_email ON professores(email)`,
+
+  // --- DADOS MOCADOS PARA TESTES DE AVALIAÇÃO ---
+  `INSERT OR IGNORE INTO professores (id, nome, email, siape, departamento) VALUES 
+    (1, 'Alan Turing', 'alan.turing@ufba.br', '1000001', 'Ciência da Computação'),
+    (2, 'Ada Lovelace', 'ada.lovelace@ufba.br', '1000002', 'Matemática')`,
+
+  `INSERT OR IGNORE INTO disciplinas (id, codigo, nome, descricao) VALUES 
+    (1, 'MATA56', 'Paradigmas de Linguagens de Programação', 'Estudo dos paradigmas de programação.'),
+    (2, 'MATA37', 'Introdução à Lógica de Programação', 'Conceitos básicos de algoritmos e lógica.')`,
+
+  `INSERT OR IGNORE INTO professor_disciplina (id, professor_id, disciplina_id, semestre, ano) VALUES 
+    (1, 1, 1, '2024.1', 2024),
+    (2, 2, 2, '2024.1', 2024)`
 ];
 
-function migrate() {
-  return new Promise((resolve, reject) => {
-    console.log('Starting database migration...');
-    
-    let completed = 0;
-    schema.forEach((sql) => {
+async function migrate() {
+  console.log('Starting database migration...');
+  
+  for (const sql of schema) {
+    await new Promise((resolve, reject) => {
       db.run(sql, (err) => {
-        if (err) {
-          console.error('Migration error:', err);
-          reject(err);
-        } else {
-          completed++;
-          if (completed === schema.length) {
-            console.log('Database migration completed successfully!');
-            resolve();
-          }
-        }
+        if (err) return reject(err);
+        resolve();
       });
     });
-  });
+  }
+  console.log('Database migration completed successfully!');
 }
 
 if (require.main === module) {
