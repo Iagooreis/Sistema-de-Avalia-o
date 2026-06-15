@@ -1,0 +1,108 @@
+### Não Vá Que É Barril - API Test Requests
+### Use com VS Code Extension: REST Client
+
+@baseUrl = http://localhost:5000/api
+@adminEmail = wellington.miguel@ufba.br
+@adminPassword = SenhaSegura123
+
+### 1. Health Check
+GET http://localhost:5000/
+
+### 2. Register - Valid Institutional Email
+POST @baseUrl/auth/register
+Content-Type: application/json
+
+{
+  "nome": "Wellington Miguel",
+  "email": "wellington.miguel@ufba.br",
+  "password": "SenhaSegura123"
+}
+
+### 3. Register - Invalid Commercial Email (Should fail with 400)
+POST @baseUrl/auth/register
+Content-Type: application/json
+
+{
+  "nome": "Test User",
+  "email": "testuser@gmail.com",
+  "password": "SenhaSegura123"
+}
+
+### 4. Register - Weak Password (Should fail with 400)
+POST @baseUrl/auth/register
+Content-Type: application/json
+
+{
+  "nome": "Test User",
+  "email": "test.user@ufba.br",
+  "password": "123"
+}
+
+### 5. Register - Duplicate Email (Should fail with 400)
+POST @baseUrl/auth/register
+Content-Type: application/json
+
+{
+  "nome": "Wellington Miguel",
+  "email": "wellington.miguel@ufba.br",
+  "password": "OutraSenha123"
+}
+
+### 6. Login - Valid Credentials
+POST @baseUrl/auth/login
+Content-Type: application/json
+
+{
+  "email": "@adminEmail",
+  "password": "@adminPassword"
+}
+
+### 7. Login - Invalid Email (Should fail with 401)
+POST @baseUrl/auth/login
+Content-Type: application/json
+
+{
+  "email": "nonexistent@ufba.br",
+  "password": "SenhaSegura123"
+}
+
+### 8. Login - Wrong Password (Should fail with 401)
+POST @baseUrl/auth/login
+Content-Type: application/json
+
+{
+  "email": "@adminEmail",
+  "password": "WrongPassword"
+}
+
+### 9. Get Profile - Without Token (Should fail with 401)
+GET @baseUrl/profile
+Content-Type: application/json
+
+### 10. Get Profile - With Valid Token (Replace TOKEN)
+GET @baseUrl/profile
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+### 11. Test Invalid E-mail Domain
+POST @baseUrl/auth/register
+Content-Type: application/json
+
+{
+  "nome": "Test User",
+  "email": "test.user@gmail.com",
+  "password": "ValidPass123"
+}
+
+### 12. Test Valid E-mail Domain
+POST @baseUrl/auth/register
+Content-Type: application/json
+
+{
+  "nome": "Valid User",
+  "email": "valid.user@ufba.br",
+  "password": "ValidPass123"
+}
+
+### 13. Validate Password Hashing
+### After login, check that password is hashed correctly by trying to login multiple times
+GET @baseUrl/health
