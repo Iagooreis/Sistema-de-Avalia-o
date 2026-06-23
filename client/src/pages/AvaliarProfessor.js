@@ -16,6 +16,7 @@ const AvaliarProfessor = () => {
     anonimo: true
   });
   const [status, setStatus] = useState({ type: '', message: '' });
+  const [loadError, setLoadError] = useState('');
 
   useEffect(() => {
     // Busca contextos (Professor + Disciplina)
@@ -27,11 +28,9 @@ const AvaliarProfessor = () => {
         });
         setContextos(response.data);
       } catch (error) {
-        // Fallback: Usa os dados mocados se a rota da API ainda não estiver pronta
-        setContextos([
-          { id: 1, professor_nome: 'Alan Turing', disciplina_codigo: 'MATA56', semestre: '2024.1' },
-          { id: 2, professor_nome: 'Ada Lovelace', disciplina_codigo: 'MATA37', semestre: '2024.1' }
-        ]);
+        console.error('Erro ao carregar contextos:', error.response?.data || error.message);
+        setContextos([]);
+        setLoadError('Não foi possível carregar os contextos de avaliação. Atualize a página ou tente novamente mais tarde.');
       }
     };
     fetchContextos();
@@ -47,9 +46,18 @@ const AvaliarProfessor = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!formData.professor_disciplina_id) {
+      setStatus({ type: 'danger', message: 'Selecione o professor e disciplina antes de enviar.' });
+      return;
+    }
+
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/avaliacoes', formData, {
+      await axios.post('http://localhost:5000/api/avaliacoes', {
+        ...formData,
+        professor_disciplina_id: Number(formData.professor_disciplina_id),
+      }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setStatus({ type: 'success', message: 'Avaliação enviada com sucesso!' });
@@ -76,13 +84,18 @@ const AvaliarProfessor = () => {
           <div className="form-group">
             <label>Contexto (Professor e Disciplina)</label>
             <select name="professor_disciplina_id" value={formData.professor_disciplina_id} onChange={handleChange} required>
-              <option value="">Selecione a disciplina...</option>
-              {contextos.map(ctx => (
+              <option value="" disabled>
+                Selecione a disciplina...
+              </option>
+              {contextos.map((ctx) => (
                 <option key={ctx.id} value={ctx.id}>
                   {ctx.professor_nome} - {ctx.disciplina_codigo} ({ctx.semestre})
                 </option>
               ))}
             </select>
+            {loadError && (
+              <p style={{ marginTop: '10px', color: '#b91c1c' }}>{loadError}</p>
+            )}
           </div>
 
           {criterios.map(criterio => (

@@ -7,6 +7,8 @@ import Dashboard from './pages/Dashboard';
 import SearchDiscipline from './pages/SearchDiscipline';
 import SearchProfessor from './pages/SearchProfessor';
 import AvaliarProfessor from './pages/AvaliarProfessor';
+import ProfessorDetail from './pages/ProfessorDetail';
+import PerfilProfessor from './pages/PerfilProfessor';
 import Profile from './pages/Profile';
 import './styles/global.css';
 
@@ -47,6 +49,14 @@ function App() {
           }
         />
         <Route
+          path="/professores/:id/perfil"
+          element={
+            <ProtectedRoute>
+              <PerfilProfessor />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/rate-professor"
           element={
             <ProtectedRoute>
@@ -59,6 +69,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/professores/:id/disciplinas/:codigo"
+          element={
+            <ProtectedRoute>
+              <ProfessorDetail />
             </ProtectedRoute>
           }
         />

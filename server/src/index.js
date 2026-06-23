@@ -8,6 +8,8 @@ const helmet = require('helmet');
 const authRoutes = require('./routes/authRoutes');
 const mainRoutes = require('./routes/mainRoutes');
 const avaliacoesRoutes = require('./routes/avaliacoesRoutes');
+const disciplinasRoutes = require('./routes/disciplinasRoutes');
+const professoresRoutes = require('./routes/professoresRoutes');
 const { handleError } = require('./utils/errorHandler');
 
 const app = express();
@@ -22,6 +24,8 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api', mainRoutes);
 app.use('/api/avaliacoes', avaliacoesRoutes);
+app.use('/api/disciplinas', disciplinasRoutes);
+app.use('/api/professores', professoresRoutes);
 
 // Health check endpoint
 app.get('/', (req, res) => {

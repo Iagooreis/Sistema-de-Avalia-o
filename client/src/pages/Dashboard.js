@@ -29,8 +29,8 @@ export default function Dashboard() {
       <main className="container dashboard-main">
         <section className="dashboard-section">
           <h2>Funcionalidades</h2>
-          <div className="feature-grid">
-            <div className="feature-card">
+          <div className="feature-grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <div className="feature-card h-full flex flex-col">
               <h3>Buscar por Disciplina</h3>
               <p>Encontre professores por disciplina específica.</p>
               <button 
@@ -40,7 +40,7 @@ export default function Dashboard() {
                 Explorar
               </button>
             </div>
-            <div className="feature-card">
+            <div className="feature-card h-full flex flex-col">
               <h3>Buscar por Professor</h3>
               <p>Veja todas as disciplinas de um professor.</p>
               <button 
@@ -50,7 +50,7 @@ export default function Dashboard() {
                 Explorar
               </button>
             </div>
-            <div className="feature-card">
+            <div className="feature-card h-full flex flex-col">
               <h3>Avaliar Professor</h3>
               <p>Deixe sua avaliação sobre um professor.</p>
               <button 
@@ -60,7 +60,7 @@ export default function Dashboard() {
                 Avaliar
               </button>
             </div>
-            <div className="feature-card">
+            <div className="feature-card h-full flex flex-col">
               <h3>Meu Perfil</h3>
               <p>Gerencie suas informações e avaliações.</p>
               <button 
